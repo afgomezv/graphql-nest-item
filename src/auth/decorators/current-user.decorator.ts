@@ -28,7 +28,7 @@ export const CurrentUser = createParamDecorator(
     }
 
     throw new ForbiddenException(
-      `User ${user.fullName} nedd a valid [${roles}]`,
+      `User ${user.fullName} need a valid [${roles}]`,
     );
   },
 );
