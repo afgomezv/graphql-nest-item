@@ -7,8 +7,8 @@ import {
   Unique,
 } from 'typeorm';
 
-import { Item } from 'src/items/entities/item.entity';
-import { List } from 'src/lists/entities/list.entity';
+import { Item } from './../../items/entities/item.entity';
+import { List } from './../../lists/entities/list.entity';
 
 @Entity('listItems')
 @Unique('listItem-item', ['list', 'item'])
@@ -26,8 +26,9 @@ export class ListItem {
   @Field(() => Boolean)
   completed: boolean;
 
+  // Relaciones
   @ManyToOne(() => List, (list) => list.listItem, { lazy: true })
-  // @Field(() => List)
+  @Field(() => List)
   list: List;
 
   @ManyToOne(() => Item, (item) => item.listItem, { lazy: true })
