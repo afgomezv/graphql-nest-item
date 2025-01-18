@@ -1,6 +1,6 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Like, Repository } from 'typeorm';
+import { Repository } from 'typeorm';
 
 import { CreateItemInput, UpdateItemInput } from './dto/inputs';
 import { Item } from './entities/item.entity';
@@ -13,6 +13,7 @@ export class ItemsService {
     @InjectRepository(Item)
     private readonly itemRepository: Repository<Item>,
   ) {}
+
   async create(createItemInput: CreateItemInput, user: User): Promise<Item> {
     const newItem = this.itemRepository.create({ ...createItemInput, user });
     return await this.itemRepository.save(newItem);
@@ -20,10 +21,10 @@ export class ItemsService {
 
   async findAll(
     user: User,
-    paginatioArgs: PaginationArgs,
+    paginationArgs: PaginationArgs,
     searchArgs: SearchArgs,
   ): Promise<Item[]> {
-    const { limit, offset } = paginatioArgs;
+    const { limit, offset } = paginationArgs;
     const { search } = searchArgs;
 
     const queryBuilder = this.itemRepository
