@@ -9,7 +9,7 @@ export class CreateListItemInput {
   @IsOptional()
   quantity: number = 0;
 
-  @Field(() => Number, { nullable: true })
+  @Field(() => Boolean, { nullable: true })
   @IsBoolean()
   @IsOptional()
   completed: boolean = false;

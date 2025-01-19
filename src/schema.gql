@@ -20,7 +20,8 @@ type List {
   name: String!
   user: User!
   listItem: [ListItem!]!
-  items: [ListItem!]!
+  items(offset: Int = 0, limit: Int = 10, search: String): [ListItem!]!
+  totalItems: Float!
 }
 
 type ListItem {
@@ -52,7 +53,7 @@ type Query {
   item(id: ID!): Item!
   lists(offset: Int = 0, limit: Int = 10, search: String): [List!]!
   list(id: ID!): List!
-  listItem: [ListItem!]!
+  listItem(id: String!): ListItem!
 }
 
 """Cualquier description"""
@@ -74,6 +75,7 @@ type Mutation {
   updateList(updateListInput: UpdateListInput!): List!
   removeList(id: ID!): List!
   createListItem(createListItemInput: CreateListItemInput!): ListItem!
+  updateListItem(updateListItemInput: UpdateListItemInput!): ListItem!
 
   """Execute build the database"""
   executeSeed: Boolean!
@@ -121,7 +123,15 @@ input UpdateListInput {
 
 input CreateListItemInput {
   quantity: Float = 0
-  completed: Float = 0
+  completed: Boolean = false
   listId: ID!
   itemId: ID!
+}
+
+input UpdateListItemInput {
+  quantity: Float = 0
+  completed: Boolean = false
+  listId: ID
+  itemId: ID
+  id: ID!
 }
